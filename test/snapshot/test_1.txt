@@ -1,0 +1,4 @@
+standalone
+✔️ standalone
+async standalone
+✔️ standalone async
