@@ -1,0 +1,23 @@
+{
+  "name": "@fatso83/mini-mocha",
+  "version": "1.0.0",
+  "description": "A minimal emulation of Mocha",
+  "main": "index.js",
+  "scripts": {
+    "test": "node demo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fatso83/mini-mocha.git"
+  },
+  "keywords": [
+    "mocha",
+    "testing",
+    "demo"
+  ],
+  "author": "Carl-Erik Kopseng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fatso83/mini-mocha/issues"
+  }
+}
