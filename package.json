@@ -1,6 +1,6 @@
 {
   "name": "@fatso83/mini-mocha",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A minimal emulation of Mocha",
   "main": "index.js",
   "scripts": {
