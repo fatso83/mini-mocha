@@ -1,8 +1,9 @@
 # mini-mocha
-> A absolutely minimal emulation of Mocha for demos
+> An absolutely minimal emulation of Mocha for demos.
 
 ## Why
-Makes it easier to [demo bugs on RunKit](https://runkit.com/fatso83/sinon-test-issue-101) when I don't need to make it from scratch all the time.
+This was hacked together very quickly for demo purposes, making it possible to verify bugs on the Sinon issue tracker 
+without having access to a development environment. Having an API emulation of Mocha makes it easier to [demo bugs on RunKit](https://runkit.com/fatso83/sinon-test-issue-101) when I see a verification test using Mocha or Jasmine, as I can just copy-paste the test into RunKit, add `require('@fatso83/mini-mocha')` at the top and it will run!
 
 ## Typical usage
 
@@ -22,20 +23,14 @@ describe("issue #101 ES5 version", function() {
 
 Results in this being printed
 ```
-before
-before each
 issue #101 ES5 version: normal sync test: ✔️
-after each
-before each
 issue #101 ES5 version: failing test: ❌. My error
-after each
-This operation is unsupported: async/callback testing
-after
 ```
 
 ## Known limitations
-- No async support
-- No Promsie support
-- No support for Mocha internals
+There are bits and pieces missing, most notably:
+
+- No async support (by passing a callback or returning a promise)
+- No support for Mocha internals like `this.title`, `this.fullTitle()`, etc.
 
 ## Pull requests welcome :)
