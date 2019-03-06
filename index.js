@@ -16,6 +16,9 @@ function describe(title, fn) {
     befores.forEach(run)
     its.forEach(run)
     afters.forEach(run)
+    its = [];
+    befores = [];
+    afters = [];
 }
 function log(title, err) { 
     var status = err? `❌. ${err}`: "✔️";

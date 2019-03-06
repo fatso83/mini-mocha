@@ -1,6 +1,6 @@
 require('./index');
 
-describe("issue #101 ES5 version", function() {
+describe("Block A", function() {
     var Foo = {
         myMethod: function() { return "original"; }
     }
@@ -20,5 +20,11 @@ describe("issue #101 ES5 version", function() {
 
     it("async test (not supported)", function(done) {
         console.warn("should never get here");
+    });
+});
+
+describe("Block B", function() {
+    it("failing test", function() {
+        throw new Error("My error");
     });
 });
