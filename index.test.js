@@ -29,11 +29,13 @@ test("call order", function(assert) {
     });
   });
 
-  assert.deepEqual(calls.before, [1]);
-  assert.deepEqual(calls.beforeEach, [2, 4]);
-  assert.deepEqual(calls.afterEach, [3, 5]);
-  assert.deepEqual(calls.after, [6]);
-  assert.end();
+  mm.wait().then(function() {
+    assert.deepEqual(calls.before, [1]);
+    assert.deepEqual(calls.beforeEach, [2, 4]);
+    assert.deepEqual(calls.afterEach, [3, 5]);
+    assert.deepEqual(calls.after, [6]);
+    assert.end();
+  });
 });
 
 test("it should run without describe", function(assert) {

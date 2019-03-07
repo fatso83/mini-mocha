@@ -8,29 +8,61 @@ var befores = [];
 var afters = [];
 var afterEachs = [];
 var printFn = console.log.bind(console);
+var runningOp = Promise.resolve();
 
+/**
+ * @returns Promise
+ */
 function it(title, fn) {
   assert(typeof title === "string", "title required");
   assert(typeof fn === "function", "missing function");
+  var async = !!fn.length;
 
-  its.push(function() {
-    if (fn.length) return unsupported("async/callback testing")();
-
-    beforeEachs.forEach(run);
-    try {
-      fn();
-      log(title, null);
-    } catch (err) {
-      log(title, err.message);
-    }
-    afterEachs.forEach(run);
-  });
+  its.push(singleTestRun(title, fn));
 
   // To support running without outer describe block
+  // Run each test immediately
   if (!d) {
-    its.forEach(run);
-    its = [];
+    runningOp = runningOp.then(runAll.bind(null, its)).then(function() {
+      its = [];
+    });
   }
+}
+
+/**
+ * @returns Promise that always resolves (we don't collect results)
+ */
+function singleTestRun(title, fn) {
+  return function() {
+    return runAll(beforeEachs)
+      .catch(function(err) {
+        log(title + ": beforeEach failed:", err.message);
+      })
+      .then(function runSingleTest() {
+        return new Promise(function(resolve, reject) {
+          function done(err) {
+            err ? resolve() : reject(err);
+          }
+          fn(done);
+        });
+      })
+      .then(function() {
+        log(title, null);
+      })
+      .catch(function(err) {
+        log(title, err.message);
+      })
+      .then(function(resolve, reject) {
+        return runAll(afterEachs);
+      });
+  };
+}
+
+/**
+ * @returns Promise
+ */
+function runAll(funcs) {
+  return Promise.all(funcs.map(run));
 }
 
 function describe(title, fn) {
@@ -38,18 +70,20 @@ function describe(title, fn) {
   assert(typeof fn === "function");
 
   d = title;
-  fn();
-  befores.forEach(run);
-  its.forEach(run);
-  afters.forEach(run);
-
-  // reset
-  its = [];
-  befores = [];
-  afters = [];
-  afterEachs = [];
-  beforeEachs = [];
-  d = null;
+  runningOp = runningOp.then(function() {
+    return runAll(befores)
+      .then(runAll.bind(null, its))
+      .then(runAll.bind(null, afters))
+      .then(function() {
+        // reset
+        its = [];
+        befores = [];
+        afters = [];
+        afterEachs = [];
+        beforeEachs = [];
+        d = null;
+      });
+  });
 }
 
 function before(fn) {
@@ -74,8 +108,11 @@ function log(title, err) {
     printFn((d ? `${d}: ` : "") + `${title}: ${status}`);
   }
 }
+
 function run(fn) {
-  fn();
+  return new Promise(function(resolve, reject) {
+    return fn.then(resolve);
+  });
 }
 function unsupported(title) {
   return function() {
@@ -106,5 +143,8 @@ module.exports = {
   },
   doPrint: function(flag) {
     doPrint = flag;
+  },
+  wait: function() {
+    return runningOp;
   }
 };
