@@ -103,5 +103,8 @@ module.exports = {
   install: install,
   setPrint: function(fn) {
     printFn = fn;
+  },
+  doPrint: function(flag) {
+    doPrint = flag;
   }
 };

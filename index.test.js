@@ -1,5 +1,6 @@
 var mm = require("./index");
 var test = require("tape");
+var sinon = require("sinon");
 
 test("call order", function(assert) {
   var index = 1;
@@ -36,13 +37,10 @@ test("call order", function(assert) {
 });
 
 test("it should run without describe", function(assert) {
-  var called = false;
+  var fake = sinon.fake();
+  mm.it("should be called", fake);
 
-  mm.it("should be called", function() {
-    called = true;
-  });
-
-  assert.true(called);
+  assert.true(fake.called);
   assert.end();
 });
 
@@ -53,9 +51,25 @@ function testArgs(fn) {
     assert.end();
   };
 }
+
 test("it: title is required", testArgs(mm.it));
 test("describe: title is required", testArgs(mm.describe));
 
-//test("async support", function(assert){
+test("async support", function(t) {
+  t.test("it: call callback on completion ends test", function(st) {
+    st.plan(2);
 
-//});
+    var fakePrint = sinon.fake();
+    mm.setPrint();
+    mm.doPrint(true);
+
+    mm.it("my title", function(done) {
+      setTimeout(function() {
+        st.false(fakePrint.called);
+        done();
+        st.true(fakePrint.calledWith(/my title/));
+        st.end();
+      }, 0);
+    });
+  });
+});
