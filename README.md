@@ -3,12 +3,12 @@
 
 ## Why
 This was hacked together very quickly for demo purposes, making it possible to verify bugs on the Sinon issue tracker 
-without having access to a development environment. Having an API emulation of Mocha makes it easier to [demo bugs on RunKit](https://runkit.com/fatso83/sinon-test-issue-101) when I see a verification test using Mocha or Jasmine, as I can just copy-paste the test into RunKit, add `require('@fatso83/mini-mocha')` at the top and it will run!
+without having access to a development environment. Having an API emulation of Mocha makes it easier to [demo bugs on RunKit](https://runkit.com/fatso83/sinon-test-issue-101) when I see a verification test using Mocha or Jasmine, as I can just copy-paste the test into RunKit, add `require('@fatso83/mini-mocha').install()` at the top and it will run!
 
 ## Typical usage
 
 ```javascript
-require('@fatso83/mini-mocha');
+require('@fatso83/mini-mocha').install();
 
 describe("issue #101 ES5 version", function() {
     it("normal sync test", function() {
