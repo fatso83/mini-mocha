@@ -19,5 +19,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fatso83/mini-mocha/issues"
+  },
+  "dependencies": {
+    "prettier": "^1.16.4"
   }
 }
