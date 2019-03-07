@@ -32,6 +32,30 @@ test("call order", function(assert) {
   assert.deepEqual(calls.beforeEach, [2, 4]);
   assert.deepEqual(calls.afterEach, [3, 5]);
   assert.deepEqual(calls.after, [6]);
-
   assert.end();
 });
+
+test("it should run without describe", function(assert) {
+  var called = false;
+
+  mm.it("should be called", function() {
+    called = true;
+  });
+
+  assert.true(called);
+  assert.end();
+});
+
+function testArgs(fn) {
+  return function(assert) {
+    assert.throws(fn.bind(null, function() {}), "title required");
+    assert.throws(fn.bind(null, "title"), "missing function");
+    assert.end();
+  };
+}
+test("it: title is required", testArgs(mm.it));
+test("describe: title is required", testArgs(mm.describe));
+
+//test("async support", function(assert){
+
+//});
