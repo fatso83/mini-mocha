@@ -4,7 +4,9 @@
   "description": "A minimal emulation of Mocha",
   "main": "index.js",
   "scripts": {
-    "test": "node demo.js"
+    "fixup": "prettier --write *.js",
+    "test": "node index.test.js",
+    "precommit": "prettier -c *.js && node index.test.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,9 @@
   "bugs": {
     "url": "https://github.com/fatso83/mini-mocha/issues"
   },
-  "dependencies": {
-    "prettier": "^1.16.4"
+  "devDependencies": {
+    "husky": "^1.3.1",
+    "prettier": "^1.16.4",
+    "tape": "^4.10.1"
   }
 }

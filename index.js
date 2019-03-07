@@ -23,6 +23,8 @@ function describe(title, fn) {
   its = [];
   befores = [];
   afters = [];
+  afterEachs = [];
+  beforeEachs = [];
 }
 function log(title, err) {
   var status = err ? `❌. ${err}` : "✔️";
