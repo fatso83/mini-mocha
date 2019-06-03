@@ -1,0 +1,20 @@
+✔️ describe test with done
+==> describe test with done before
+==> describe test with done beforeEach
+==> main with done it 2
+✔️ main with done it 1
+==> describe test with done afterEach
+==> describe test with done beforeEach
+==> main with done it 2 - async
+✔️ main with done it 2 - async
+==> describe test with done afterEach
+==> describe test with done beforeEach
+❌. done error main with done it 3 - error object as an error
+==> describe test with done afterEach
+==> describe test with done beforeEach
+❌. error message main with done it 4 - string as an error
+==> describe test with done afterEach
+==> describe test with done beforeEach
+✔️ main with done it 4 - no error
+==> describe test with done afterEach
+==> describe test with done after

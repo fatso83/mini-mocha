@@ -1,107 +1,91 @@
-var assert = require("assert");
+const { assertFunction, assertTitle } = require("./lib/util");
+const {
+  queueHandler,
+  taskQueue,
+  taskType,
+  taskAddedEventName
+} = require("./lib/queue");
+const { metaData } = require("./lib/execute");
 
-var d = null;
-var doPrint = false;
-var its = [];
-var beforeEachs = [];
-var befores = [];
-var afters = [];
-var afterEachs = [];
-var printFn = console.log.bind(console);
-
-function it(title, fn) {
-  assert(typeof title === "string", "title required");
-  assert(typeof fn === "function", "missing function");
-
-  its.push(function() {
-    if (fn.length) return unsupported("async/callback testing")();
-
-    beforeEachs.forEach(run);
-    try {
-      fn();
-      log(title, null);
-    } catch (err) {
-      log(title, err.message);
-    }
-    afterEachs.forEach(run);
-  });
-
-  // To support running without outer describe block
-  if (!d) {
-    its.forEach(run);
-    its = [];
-  }
-}
-
-function describe(title, fn) {
-  assert(title, "title required");
-  assert(typeof fn === "function");
-
-  d = title;
-  fn();
-  befores.forEach(run);
-  its.forEach(run);
-  afters.forEach(run);
-
-  // reset
-  its = [];
-  befores = [];
-  afters = [];
-  afterEachs = [];
-  beforeEachs = [];
-  d = null;
-}
-
-function before(fn) {
-  befores.push(fn);
-}
+/**
+ * Purpose of using the "caller" is to
+ * keep the each "it"s and "eachHooks" inside the function.
+ * I set the metaData attribute in the caller function.
+ * (check the "describe" function)
+ *
+ * TODO:
+ * Since "caller" attribute is none standard approach,
+ * Lets try to replace this with better approach
+ */
 
 function after(fn) {
-  afters.push(fn);
-}
-
-function beforeEach(fn) {
-  beforeEachs.push(fn);
+  after.caller[metaData].afterHook = fn;
 }
 
 function afterEach(fn) {
-  afterEachs.push(fn);
+  assertFunction(fn);
+  afterEach.caller[metaData].afterEachHookCollection.push(fn);
 }
 
-function log(title, err) {
-  var status = err ? `❌. ${err}` : "✔️";
-  if (doPrint) {
-    printFn((d ? `${d}: ` : "") + `${title}: ${status}`);
-  }
+function before(fn) {
+  assertFunction(fn);
+  before.caller[metaData].beforeHook = fn;
 }
-function run(fn) {
-  fn();
+
+function beforeEach(fn) {
+  assertFunction(fn);
+  beforeEach.caller[metaData].beforeEachHookCollection.push(fn);
 }
-function unsupported(title) {
-  return function() {
-    console.error("This operation is unsupported: " + title);
+
+function describe(title, fn) {
+  assertTitle(title);
+  assertFunction(fn);
+
+  fn[metaData] = {
+    title,
+    afterHook: null,
+    afterEachHookCollection: [],
+    beforeHook: null,
+    beforeEachHookCollection: [],
+    itCollection: []
   };
+
+  taskQueue.push({
+    type: taskType.describe,
+    fn
+  });
+
+  queueHandler.emit(taskAddedEventName);
 }
 
-function install() {
-  doPrint = true;
-  global.describe = describe;
-  global.it = it;
-  global.before = before;
-  global.after = after;
-  global.beforeEach = beforeEach;
-  global.afterEach = afterEach;
+function it(title, fn) {
+  assertTitle(title);
+  assertFunction(fn);
+
+  const caller = it.caller ? it.caller[metaData] : undefined;
+  if (!caller) {
+    taskQueue.push({
+      type: taskType.it,
+      title,
+      fn
+    });
+
+    queueHandler.emit(taskAddedEventName);
+  } else {
+    caller.itCollection.push({
+      title,
+      fn
+    });
+  }
 }
 
 module.exports = {
-  describe: describe,
-  it: it,
-  before: before,
-  after: after,
-  beforeEach: beforeEach,
-  afterEach: afterEach,
-  install: install,
-  setPrint: function(fn) {
-    printFn = fn;
+  install: function install() {
+    global.describe = describe;
+    global.it = it;
+    global.after = after;
+    global.afterEach = afterEach;
+    global.before = before;
+    global.beforeEach = beforeEach;
   }
 };
