@@ -1,10 +1,5 @@
 const { assertFunction, assertTitle } = require("./lib/util");
-const {
-  queueHandler,
-  taskQueue,
-  taskType,
-  taskAddedEventName
-} = require("./lib/queue");
+const { queueHandler, taskQueue, taskType, taskAddedEventName } = require("./lib/queue");
 const { metaData } = require("./lib/execute");
 
 /**
@@ -19,73 +14,73 @@ const { metaData } = require("./lib/execute");
  */
 
 function after(fn) {
-  after.caller[metaData].afterHook = fn;
+    after.caller[metaData].afterHook = fn;
 }
 
 function afterEach(fn) {
-  assertFunction(fn);
-  afterEach.caller[metaData].afterEachHookCollection.push(fn);
+    assertFunction(fn);
+    afterEach.caller[metaData].afterEachHookCollection.push(fn);
 }
 
 function before(fn) {
-  assertFunction(fn);
-  before.caller[metaData].beforeHook = fn;
+    assertFunction(fn);
+    before.caller[metaData].beforeHook = fn;
 }
 
 function beforeEach(fn) {
-  assertFunction(fn);
-  beforeEach.caller[metaData].beforeEachHookCollection.push(fn);
+    assertFunction(fn);
+    beforeEach.caller[metaData].beforeEachHookCollection.push(fn);
 }
 
 function describe(title, fn) {
-  assertTitle(title);
-  assertFunction(fn);
+    assertTitle(title);
+    assertFunction(fn);
 
-  fn[metaData] = {
-    title,
-    afterHook: null,
-    afterEachHookCollection: [],
-    beforeHook: null,
-    beforeEachHookCollection: [],
-    itCollection: []
-  };
+    fn[metaData] = {
+        title,
+        afterHook: null,
+        afterEachHookCollection: [],
+        beforeHook: null,
+        beforeEachHookCollection: [],
+        itCollection: []
+    };
 
-  taskQueue.push({
-    type: taskType.describe,
-    fn
-  });
-
-  queueHandler.emit(taskAddedEventName);
-}
-
-function it(title, fn) {
-  assertTitle(title);
-  assertFunction(fn);
-
-  const caller = it.caller ? it.caller[metaData] : undefined;
-  if (!caller) {
     taskQueue.push({
-      type: taskType.it,
-      title,
-      fn
+        type: taskType.describe,
+        fn
     });
 
     queueHandler.emit(taskAddedEventName);
-  } else {
-    caller.itCollection.push({
-      title,
-      fn
-    });
-  }
+}
+
+function it(title, fn) {
+    assertTitle(title);
+    assertFunction(fn);
+
+    const caller = it.caller ? it.caller[metaData] : undefined;
+    if (!caller) {
+        taskQueue.push({
+            type: taskType.it,
+            title,
+            fn
+        });
+
+        queueHandler.emit(taskAddedEventName);
+    } else {
+        caller.itCollection.push({
+            title,
+            fn
+        });
+    }
 }
 
 module.exports = {
-  install: function install() {
-    global.describe = describe;
-    global.it = it;
-    global.after = after;
-    global.afterEach = afterEach;
-    global.before = before;
-    global.beforeEach = beforeEach;
-  }
+    install: function install() {
+        global.describe = describe;
+        global.it = it;
+        global.after = after;
+        global.afterEach = afterEach;
+        global.before = before;
+        global.beforeEach = beforeEach;
+    }
 };
