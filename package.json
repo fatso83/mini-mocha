@@ -1,10 +1,11 @@
 {
   "name": "@fatso83/mini-mocha",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A minimal emulation of Mocha",
   "main": "index.js",
   "files": [
-    "index.js", "lib/**/*.js"
+    "index.js",
+    "lib/**/*.js"
   ],
   "scripts": {
     "fixup": "prettier --write *.js",
