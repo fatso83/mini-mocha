@@ -9,7 +9,8 @@
   "scripts": {
     "fixup": "prettier --write *.js",
     "test": "node test/tests.js",
-    "precommit": "prettier -c *.js && node test/tests.js"
+    "precommit": "prettier -c *.js && node test/tests.js",
+    "update-snapshots": "rm -r test/snapshot/* && npm t"
   },
   "repository": {
     "type": "git",
