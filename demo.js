@@ -1,121 +1,38 @@
 require("./").install();
 
-describe("describe 1", function() {
-  before(function() {
-    console.log("==> describe 1 before");
+// This bit is just to easily update the README
+describe("issue #101 ES5 version", function() {
+  it("shows a normal sync test", function() {
+    // passes
   });
 
-  after(function() {
-    console.log("==> describe 1 after");
+  it("will fail", function() {
+    throw new Error("My error");
   });
 
-  beforeEach(function() {
-    console.log("==> describe 1 beforeEach");
+  it("shows a normal async test using callbacks", function(done) {
+    setTimeout(() => {
+      done();
+    });
   });
 
-  afterEach(() => {
-    console.log("==> describe 1 afterEach");
-  });
-
-  it("main 1 it 1", async function() {
-    const y = await Promise.resolve("1");
-    console.log("==> main 1 it 1 --> ", y);
-  });
-
-  it("main 1 it 2", function() {
-    console.log("==> main 1 it 2");
+  it("will fail async", function(done) {
+    setTimeout(() => {
+      done(new Error("My error"));
+    });
   });
 });
 
-describe("describe 2", function() {
-  before(function() {
-    console.log("==> describe 2 before");
+describe("async/await (aka Promises) feature", function() {
+  it("should passe as expected", async function() {
+    await new Promise(function(resolve, reject) {
+      setTimeout(resolve, 500);
+    });
   });
 
-  after(function() {
-    console.log("==> describe 2 after");
+  it("should fail", async function() {
+    await new Promise(function(resolve, reject) {
+      setTimeout(reject, 500, new TypeError("Some wrong type"));
+    });
   });
-
-  beforeEach(function() {
-    console.log("==> describe 2 beforeEach");
-  });
-
-  afterEach(() => {
-    console.log("==> describe 2 afterEach");
-  });
-
-  it("main 2 it 1", async function() {
-    const y = await Promise.resolve("1");
-    console.log("==> main 2 it 2 --> ", y);
-  });
-
-  it("main 2 it 2", function() {
-    console.log("==> main 2 it 2");
-  });
-});
-
-describe("describe 3", function() {
-  before(function() {
-    console.log("==> describe 3 before");
-  });
-
-  after(function() {
-    console.log("==> describe 3 after");
-  });
-
-  beforeEach(function() {
-    console.log("==> describe 3 beforeEach");
-  });
-
-  afterEach(() => {
-    console.log("==> describe 3 afterEach");
-  });
-
-  it("main 3 it 1", async function() {
-    const y = await Promise.resolve("1");
-    console.log("==> main 3 it 1 --> ", y);
-  });
-
-  it("main 3 it 2", function() {
-    console.log("==> main 3 it 2");
-    throw new Error("failed");
-  });
-});
-
-describe("describe 4", function() {
-  before(function() {
-    console.log("==> describe 4 before");
-  });
-
-  after(async function() {
-    const s = await Promise.resolve("4");
-    console.log("==> describe 4 after --> ", s);
-  });
-
-  beforeEach(function() {
-    console.log("==> describe 4 beforeEach");
-  });
-
-  afterEach(() => {
-    console.log("==> describe 4 afterEach");
-  });
-
-  it("main 4 it 1", async function() {
-    const y = await Promise.resolve("1");
-    console.log("==> main 4 it 1 --> ", y);
-  });
-
-  it("main 4 it 2", function() {
-    console.log("==> main 4 it 2");
-    throw new Error("failed");
-  });
-});
-
-it("standalone", () => {
-  console.log("standalone");
-});
-
-it("standalone async", async () => {
-  const y = await Promise.resolve("standalone");
-  console.log("async standalone");
 });

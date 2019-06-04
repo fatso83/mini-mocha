@@ -28,9 +28,8 @@ issue #101 ES5 version: failing test: ❌. My error
 ```
 
 ## Known limitations
-There are bits and pieces missing, most notably:
+There are bits and pieces missing from the Mocha API, but it fulfills all the basic requirements.
 
-- No async support (by passing a callback or returning a promise)
 - No support for Mocha internals like `this.title`, `this.fullTitle()`, etc.
 
 ## Pull requests welcome :)
