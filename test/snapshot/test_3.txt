@@ -1,0 +1,48 @@
+✔️ describe 1
+==> describe 1 before
+==> describe 1 beforeEach
+==> main 1 it 1 -->  1
+✔️ main 1 it 1
+==> describe 1 afterEach
+==> describe 1 beforeEach
+==> main 1 it 2
+✔️ main 1 it 2
+==> describe 1 afterEach
+==> describe 1 after
+✔️ describe 2
+==> describe 2 before
+==> describe 2 beforeEach
+==> main 2 it 2 -->  1
+✔️ main 2 it 1
+==> describe 2 afterEach
+==> describe 2 beforeEach
+==> main 2 it 2
+✔️ main 2 it 2
+==> describe 2 afterEach
+==> describe 2 after
+✔️ describe 3
+==> describe 3 before
+==> describe 3 beforeEach
+==> main 3 it 1 -->  1
+✔️ main 3 it 1
+==> describe 3 afterEach
+==> describe 3 beforeEach
+==> main 3 it 2
+❌. failed main 3 it 2
+==> describe 3 afterEach
+==> describe 3 after
+✔️ describe 4
+==> describe 4 before
+==> describe 4 beforeEach
+==> main 4 it 1 -->  1
+✔️ main 4 it 1
+==> describe 4 afterEach
+==> describe 4 beforeEach
+==> main 4 it 2
+❌. failed main 4 it 2
+==> describe 4 afterEach
+==> describe 4 after -->  4
+standalone
+✔️ standalone
+async standalone
+✔️ standalone async
