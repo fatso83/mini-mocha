@@ -4,7 +4,7 @@
   "description": "A minimal emulation of Mocha",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js", "lib/**/*.js"
   ],
   "scripts": {
     "fixup": "prettier --write *.js",
