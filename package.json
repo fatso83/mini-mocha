@@ -4,12 +4,15 @@
   "description": "A minimal emulation of Mocha",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js", "lib/**/*.js"
   ],
   "scripts": {
     "fixup": "prettier --write *.js",
-    "test": "node test/tests.js",
-    "update-snapshots": "rm -r test/snapshot/* && npm t"
+    "test": "run-p test:*",
+    "test:output": "node test/tests.js",
+    "test:tarball": "./scripts/test-tarball.sh",
+    "update-snapshots": "rimraf test/snapshot/* && npm t",
+    "clean": "rimraf package *.tgz"
   },
   "repository": {
     "type": "git",
@@ -27,11 +30,13 @@
   },
   "devDependencies": {
     "husky": "^2.3.0",
-    "prettier": "^1.16.4"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.16.4",
+    "rimraf": "^2.6.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "prettier -c *.js && node test/tests.js"
+      "pre-commit": "run-s fixup test"
     }
   }
 }
