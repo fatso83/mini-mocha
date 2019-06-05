@@ -1,6 +1,7 @@
 const { assertFunction, assertTitle } = require("./lib/util");
 const { queueHandler, taskQueue, taskType, taskAddedEventName } = require("./lib/queue");
 const { metaData } = require("./lib/execute");
+const { defaultReporter, runKitReporter } = require("./lib/reporters");
 
 /**
  * Purpose of using the "caller" is to
@@ -75,7 +76,9 @@ function it(title, fn) {
 }
 
 module.exports = {
-    install: function install() {
+    install: function install(isRunKit) {
+        // we set the reporter as normal reporter
+        queueHandler.reporter = isRunKit ? runKitReporter : defaultReporter;
         global.describe = describe;
         global.it = it;
         global.after = after;

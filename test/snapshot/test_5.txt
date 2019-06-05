@@ -1,0 +1,38 @@
+{ [Symbol(RunKit Simple Value Viewer)]:
+   { title: 'describe test with done',
+     HTML:
+      '<p style="color: #005cd6;font-size: 12px;display: block;float: left;"><br/>describe test with done</p>' } }
+==> describe test with done before
+==> describe test with done beforeEach
+==> main with done it 2
+{ [Symbol(RunKit Simple Value Viewer)]:
+   { title: 'main with done it 1',
+     HTML:
+      '<p style="color: #c00;font-size: 12px;display: block;float: left;">✖ main with done it 1</p>' } }
+==> describe test with done afterEach
+==> describe test with done beforeEach
+==> main with done it 2 - async
+{ [Symbol(RunKit Simple Value Viewer)]:
+   { title: 'main with done it 2 - async',
+     HTML:
+      '<p style="color: #c00;font-size: 12px;display: block;float: left;">✖ main with done it 2 - async</p>' } }
+==> describe test with done afterEach
+==> describe test with done beforeEach
+{ [Symbol(RunKit Simple Value Viewer)]:
+   { title: 'main with done it 3 - error object as an error',
+     HTML:
+      '<p style="color: #00d6b2;font-size: 12px;display: block;float: left;">✓ main with done it 3 - error object as an error (Failed with: "done error")</p>' } }
+==> describe test with done afterEach
+==> describe test with done beforeEach
+{ [Symbol(RunKit Simple Value Viewer)]:
+   { title: 'main with done it 4 - string as an error',
+     HTML:
+      '<p style="color: #00d6b2;font-size: 12px;display: block;float: left;">✓ main with done it 4 - string as an error (Failed with: "error message")</p>' } }
+==> describe test with done afterEach
+==> describe test with done beforeEach
+{ [Symbol(RunKit Simple Value Viewer)]:
+   { title: 'main with done it 4 - no error',
+     HTML:
+      '<p style="color: #c00;font-size: 12px;display: block;float: left;">✖ main with done it 4 - no error</p>' } }
+==> describe test with done afterEach
+==> describe test with done after

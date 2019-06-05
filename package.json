@@ -35,6 +35,9 @@
     "prettier": "^1.16.4",
     "rimraf": "^2.6.3"
   },
+  "dependencies": {
+    "@runkit/value-viewer": "1.0.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "run-s fixup test"
