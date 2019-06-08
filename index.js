@@ -14,6 +14,7 @@ const { metaData } = require("./lib/execute");
  */
 
 function after(fn) {
+    assertFunction(fn);
     after.caller[metaData].afterHook = fn;
 }
 
@@ -42,15 +43,20 @@ function describe(title, fn) {
         afterEachHookCollection: [],
         beforeHook: null,
         beforeEachHookCollection: [],
+        fns: [],
         itCollection: []
     };
 
-    taskQueue.push({
-        type: taskType.describe,
-        fn
-    });
+    if (describe.caller && describe.caller[metaData]) {
+        describe.caller[metaData].fns.push(fn);
+    } else {
+        taskQueue.push({
+            type: taskType.describe,
+            fn
+        });
 
-    queueHandler.emit(taskAddedEventName);
+        queueHandler.emit(taskAddedEventName);
+    }
 }
 
 function it(title, fn) {
