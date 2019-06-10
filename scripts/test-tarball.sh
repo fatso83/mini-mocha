@@ -16,4 +16,5 @@ cd package
 node -e "require('./index.js').install()"
 
 # cleanup
+cd ..
 npm run clean
