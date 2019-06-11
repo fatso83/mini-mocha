@@ -96,19 +96,19 @@ describe("main describe", () => {
 
         describe("inner describe 2 deep describe 2", () => {
             before(() => {
-                console.log("inner describe 2 deep describe 1 before");
+                console.log("inner describe 2 deep describe 2 before");
             });
 
             beforeEach(() => {
-                console.log("inner describe 2 deep describe 1 beforeEach");
+                console.log("inner describe 2 deep describe 2 beforeEach");
             });
 
             after(() => {
-                console.log("inner describe 2 deep describe 1 after");
+                console.log("inner describe 2 deep describe 2 after");
             });
 
             afterEach(() => {
-                console.log("inner describe 2 deep describe 1 afterEach");
+                console.log("inner describe 2 deep describe 2 afterEach");
             });
 
             it("it 1 from inner describe 2 deep describe 2", () => {
