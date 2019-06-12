@@ -7,91 +7,49 @@ main describe block standalone it
 main describe afterEach
 inner describe 1
 inner describe 1 before
-main describe beforeEach
 inner describe 1 beforeEach
 it 1 from inner describe 1
 ✔️  it 1 from inner describe 1
 inner describe 1 afterEach
-main describe afterEach
-main describe beforeEach
 inner describe 1 beforeEach
 it 2 from inner describe
 ✔️  it 2 from inner describe 1
 inner describe 1 afterEach
-main describe afterEach
 inner describe 1 after
+main describe after
 inner describe 2
 inner describe 2 before
-inner describe 2 deep describe 1
-inner describe 2 deep describe 1 before
-main describe beforeEach
 inner describe 2 beforeEach
-inner describe 2 deep describe 1 beforeEach
 it 1 from inner describe 2
 ✔️  it 1 from inner describe 2
-inner describe 2 deep describe 1 afterEach
 inner describe 2 afterEach
-main describe afterEach
-main describe beforeEach
 inner describe 2 beforeEach
-inner describe 2 deep describe 1 beforeEach
 it 2 from inner describe 2
 ✔️  it 2 from inner describe 2
-inner describe 2 deep describe 1 afterEach
 inner describe 2 afterEach
-main describe afterEach
-main describe beforeEach
-inner describe 2 beforeEach
+inner describe 2 deep describe 1
+inner describe 2 deep describe 1 before
 inner describe 2 deep describe 1 beforeEach
 it 1 from inner describe 2 deep describe 1
 ✔️  it 1 from inner describe 2 deep describe 1
 inner describe 2 deep describe 1 afterEach
-inner describe 2 afterEach
-main describe afterEach
-main describe beforeEach
-inner describe 2 beforeEach
 inner describe 2 deep describe 1 beforeEach
 it 2 from inner describe 2 deep describe 1
 ✔️  it 2 from inner describe 2 deep describe 1
 inner describe 2 deep describe 1 afterEach
-inner describe 2 afterEach
-main describe afterEach
 inner describe 2 deep describe 1 after
 inner describe 2 after
+main describe after
 inner describe 2 deep describe 2
 inner describe 2 deep describe 2 before
-main describe beforeEach
-inner describe 2 beforeEach
-inner describe 2 deep describe 2 beforeEach
-it 1 from inner describe 2
-✔️  it 1 from inner describe 2
-inner describe 2 deep describe 2 afterEach
-inner describe 2 afterEach
-main describe afterEach
-main describe beforeEach
-inner describe 2 beforeEach
-inner describe 2 deep describe 2 beforeEach
-it 2 from inner describe 2
-✔️  it 2 from inner describe 2
-inner describe 2 deep describe 2 afterEach
-inner describe 2 afterEach
-main describe afterEach
-main describe beforeEach
-inner describe 2 beforeEach
 inner describe 2 deep describe 2 beforeEach
 it 1 from inner describe 2 deep describe 2
 ✔️  it 1 from inner describe 2 deep describe 2
 inner describe 2 deep describe 2 afterEach
-inner describe 2 afterEach
-main describe afterEach
-main describe beforeEach
-inner describe 2 beforeEach
 inner describe 2 deep describe 2 beforeEach
 it 2 from inner describe 2 deep describe 2
 ✔️  it 2 from inner describe 2 deep describe 2
 inner describe 2 deep describe 2 afterEach
-inner describe 2 afterEach
-main describe afterEach
 inner describe 2 deep describe 2 after
 inner describe 2 after
 main describe after
