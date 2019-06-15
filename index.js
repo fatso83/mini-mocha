@@ -84,7 +84,7 @@ function it(title, fn) {
 module.exports = {
     install: function install(isRunKit = false) {
         const reporter = isRunKit ? RunKitReporter : DefaultReporter;
-        const processor = Processor.getInstance(reporter);
+        const processor = Processor.getProcessor(reporter);
         global.describe = describe.bind({
             processor
         });
