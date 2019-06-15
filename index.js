@@ -1,6 +1,6 @@
 const { assertFunction, assertTitle } = require("./lib/util");
 const { Processor, TASK_TYPE, TASK_ADDED_EVENT_NAME } = require("./lib/processor");
-const { META_DATA } = require("./lib/execute");
+const { META_DATA } = require("./lib/executor");
 const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
 
 /**
