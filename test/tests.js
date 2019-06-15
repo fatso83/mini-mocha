@@ -41,3 +41,11 @@ runTest('test_case/test_5.js', 'snapshot/test_5.txt', (err, op) => {
 
   assert.strictEqual(op, getSnapshotContent('snapshot/test_5.txt'));
 });
+
+runTest('test_case/test_6.js', 'snapshot/test_6.txt', (err, op) => {
+  if (err) {
+    throw err;
+  }
+
+  assert.strictEqual(op, getSnapshotContent('snapshot/test_6.txt'));
+});
