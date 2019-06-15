@@ -1,8 +1,9 @@
 const { assertFunction, assertTitle } = require("./lib/util");
-const { queueHandler, taskQueue, taskType, taskAddedEventName } = require("./lib/queue");
+const { Processor, taskType, taskAddedEventName } = require("./lib/processor");
 const { metaData } = require("./lib/execute");
 const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
 
+let processor = null;
 /**
  * Purpose of using the "caller" is to
  * keep the each "it"s and "eachHooks" inside the function.
@@ -51,12 +52,12 @@ function describe(title, fn) {
     if (describe.caller && describe.caller[metaData]) {
         describe.caller[metaData].fns.push(fn);
     } else {
-        taskQueue.push({
+        processor.queue.push({
             type: taskType.describe,
             fn
         });
 
-        queueHandler.emit(taskAddedEventName);
+        processor.emit(taskAddedEventName);
     }
 }
 
@@ -66,13 +67,13 @@ function it(title, fn) {
 
     const caller = it.caller ? it.caller[metaData] : undefined;
     if (!caller) {
-        taskQueue.push({
+        processor.queue.push({
             type: taskType.it,
             title,
             fn
         });
 
-        queueHandler.emit(taskAddedEventName);
+        processor.emit(taskAddedEventName);
     } else {
         caller.itCollection.push({
             title,
@@ -83,7 +84,8 @@ function it(title, fn) {
 
 module.exports = {
     install: function install(isRunKit = false) {
-        queueHandler.reporter = isRunKit ? RunKitReporter : DefaultReporter;
+        const reporter = isRunKit ? RunKitReporter : DefaultReporter;
+        processor = Processor.getInstance(reporter);
         global.describe = describe;
         global.it = it;
         global.after = after;
