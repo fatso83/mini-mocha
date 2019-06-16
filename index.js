@@ -1,6 +1,6 @@
 const { assertFunction, assertTitle } = require("./lib/util");
-const { queueHandler, taskQueue, taskType, taskAddedEventName } = require("./lib/queue");
-const { metaData } = require("./lib/execute");
+const { Processor, TASK_TYPE, TASK_ADDED_EVENT_NAME } = require("./lib/processor");
+const { META_DATA } = require("./lib/executor");
 const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
 
 /**
@@ -16,29 +16,29 @@ const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
 
 function after(fn) {
     assertFunction(fn);
-    after.caller[metaData].afterHook = fn;
+    after.caller[META_DATA].afterHook = fn;
 }
 
 function afterEach(fn) {
     assertFunction(fn);
-    afterEach.caller[metaData].afterEachHookCollection.push(fn);
+    afterEach.caller[META_DATA].afterEachHookCollection.push(fn);
 }
 
 function before(fn) {
     assertFunction(fn);
-    before.caller[metaData].beforeHook = fn;
+    before.caller[META_DATA].beforeHook = fn;
 }
 
 function beforeEach(fn) {
     assertFunction(fn);
-    beforeEach.caller[metaData].beforeEachHookCollection.push(fn);
+    beforeEach.caller[META_DATA].beforeEachHookCollection.push(fn);
 }
 
 function describe(title, fn) {
     assertTitle(title);
     assertFunction(fn);
 
-    fn[metaData] = {
+    fn[META_DATA] = {
         title,
         afterHook: null,
         afterEachHookCollection: [],
@@ -48,15 +48,15 @@ function describe(title, fn) {
         itCollection: []
     };
 
-    if (describe.caller && describe.caller[metaData]) {
-        describe.caller[metaData].fns.push(fn);
+    if (describe.caller && describe.caller[META_DATA]) {
+        describe.caller[META_DATA].fns.push(fn);
     } else {
-        taskQueue.push({
-            type: taskType.describe,
+        this.processor.queue.push({
+            type: TASK_TYPE.describe,
             fn
         });
 
-        queueHandler.emit(taskAddedEventName);
+        this.processor.emit(TASK_ADDED_EVENT_NAME);
     }
 }
 
@@ -64,15 +64,15 @@ function it(title, fn) {
     assertTitle(title);
     assertFunction(fn);
 
-    const caller = it.caller ? it.caller[metaData] : undefined;
+    const caller = it.caller ? it.caller[META_DATA] : undefined;
     if (!caller) {
-        taskQueue.push({
-            type: taskType.it,
+        this.processor.queue.push({
+            type: TASK_TYPE.it,
             title,
             fn
         });
 
-        queueHandler.emit(taskAddedEventName);
+        this.processor.emit(TASK_ADDED_EVENT_NAME);
     } else {
         caller.itCollection.push({
             title,
@@ -83,9 +83,14 @@ function it(title, fn) {
 
 module.exports = {
     install: function install(isRunKit = false) {
-        queueHandler.reporter = isRunKit ? RunKitReporter : DefaultReporter;
-        global.describe = describe;
-        global.it = it;
+        const reporter = isRunKit ? RunKitReporter : DefaultReporter;
+        const processor = Processor.getProcessor(reporter);
+        global.describe = describe.bind({
+            processor
+        });
+        global.it = it.bind({
+            processor
+        });
         global.after = after;
         global.afterEach = afterEach;
         global.before = before;
