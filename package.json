@@ -1,6 +1,6 @@
 {
   "name": "@fatso83/mini-mocha",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "description": "A minimal emulation of Mocha",
   "main": "index.js",
   "files": [
