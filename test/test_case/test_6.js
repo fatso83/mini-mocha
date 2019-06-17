@@ -21,7 +21,11 @@ describe("main describe 1", () => {
         });
 
         it("it 2 from inner describe 1", () => {
-            assert.strictEqual("1", "2");
+            try {
+                assert.strictEqual("1", "2");
+            } catch (err) {
+                throw new Error("not match");
+            }
         });
     });
 
@@ -48,7 +52,11 @@ describe("main describe 1", () => {
             });
 
             it("it 2 from inner describe 2 deep describe 1", () => {
-                assert.strictEqual("1", "2");
+                try {
+                    assert.strictEqual("1", "2");
+                } catch (err) {
+                    throw new Error("not match");
+                }
             });
         });
 
@@ -64,7 +72,11 @@ describe("main describe 1", () => {
             });
 
             it("it 2 from inner describe 2 deep describe 2", () => {
-                assert.strictEqual("1", "2");
+                try {
+                    assert.strictEqual("1", "2");
+                } catch (err) {
+                    throw new Error("not match");
+                }
             });
         });
     });
