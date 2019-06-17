@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "fixup": "prettier --write *.js",
+    "lint": "echo Linting not setup",
     "test": "run-p test:*",
     "test:output": "node test/tests.js",
     "test:tarball": "./scripts/test-tarball.sh",
