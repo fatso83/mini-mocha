@@ -45,8 +45,7 @@ function describe(title, fn) {
         beforeHook: null,
         beforeEachHookCollection: [],
         fns: [],
-        itCollection: [],
-        timeOut: this.timeOut
+        itCollection: []
     };
 
     if (describe.caller && describe.caller[META_DATA]) {
@@ -54,7 +53,8 @@ function describe(title, fn) {
     } else {
         this.processor.queue.push({
             type: TASK_TYPE.describe,
-            fn
+            fn,
+            timeOut: this.timeOut
         });
 
         this.processor.emit(TASK_ADDED_EVENT_NAME);
@@ -65,14 +65,13 @@ function it(title, fn) {
     assertTitle(title);
     assertFunction(fn);
 
-    fn.timeOut = this.timeOut;
-
     const caller = it.caller ? it.caller[META_DATA] : undefined;
     if (!caller) {
         this.processor.queue.push({
             type: TASK_TYPE.it,
             title,
-            fn
+            fn,
+            timeOut: this.timeOut
         });
 
         this.processor.emit(TASK_ADDED_EVENT_NAME);
