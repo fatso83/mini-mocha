@@ -1,4 +1,4 @@
-const { assertFunction, assertTitle } = require("./lib/util");
+const { assertFunction, assertTitle, assertNumber } = require("./lib/util");
 const { Processor, TASK_TYPE, TASK_ADDED_EVENT_NAME } = require("./lib/processor");
 const { META_DATA } = require("./lib/executor");
 const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
@@ -53,7 +53,8 @@ function describe(title, fn) {
     } else {
         this.processor.queue.push({
             type: TASK_TYPE.describe,
-            fn
+            fn,
+            timeOut: this.timeOut
         });
 
         this.processor.emit(TASK_ADDED_EVENT_NAME);
@@ -69,7 +70,8 @@ function it(title, fn) {
         this.processor.queue.push({
             type: TASK_TYPE.it,
             title,
-            fn
+            fn,
+            timeOut: this.timeOut
         });
 
         this.processor.emit(TASK_ADDED_EVENT_NAME);
@@ -82,14 +84,20 @@ function it(title, fn) {
 }
 
 module.exports = {
-    install: function install(isRunKit = false) {
+    install: function install(isRunKit = false, timeOut = 500) {
+        if (timeOut !== undefined) {
+            assertNumber(timeOut);
+        }
+
         const reporter = isRunKit ? RunKitReporter : DefaultReporter;
         const processor = Processor.getProcessor(reporter);
         global.describe = describe.bind({
-            processor
+            processor,
+            timeOut
         });
         global.it = it.bind({
-            processor
+            processor,
+            timeOut
         });
         global.after = after;
         global.afterEach = afterEach;

@@ -1,0 +1,9 @@
+describe timeout (default value) test
+main 1 it 2
+✔️  it 1
+❌ it 2 (Failed with: "Error: Timeout of 500ms exceeded")
+❌ it 3 (Failed with: "Error: Timeout of 500ms exceeded")
+timeout test - it 1
+✔️  timeout test - it 1
+❌ timeout test - it 2 (Failed with: "Error: Timeout of 500ms exceeded")
+❌ timeout test - it 3 (Failed with: "Error: Timeout of 500ms exceeded")

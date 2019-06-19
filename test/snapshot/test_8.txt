@@ -1,0 +1,9 @@
+describe timeout (new value) test
+main 1 it 2
+✔️  it 1
+❌ it 2 (Failed with: "Error: Timeout of 800ms exceeded")
+✔️  it 3
+timeout test (new value) - it 1
+✔️  timeout test (new value) - it 1
+❌ timeout test (new value) - it 2 (Failed with: "Error: Timeout of 800ms exceeded")
+✔️  timeout test (new value) - it 3

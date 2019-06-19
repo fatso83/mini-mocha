@@ -49,3 +49,19 @@ runTest("test_case/test_6.js", "snapshot/test_6.txt", (err, op) => {
     const regex = /[\n\t\s\+']/g;
     assert.strictEqual(getSnapshotContent("snapshot/test_6.txt").replace(regex, ""), op.replace(regex, ""));
 });
+
+runTest("test_case/test_7.js", "snapshot/test_7.txt", (err, op) => {
+    if (err) {
+        throw err;
+    }
+
+    assert.strictEqual(op, getSnapshotContent("snapshot/test_7.txt"));
+});
+
+runTest("test_case/test_8.js", "snapshot/test_8.txt", (err, op) => {
+    if (err) {
+        throw err;
+    }
+
+    assert.strictEqual(op, getSnapshotContent("snapshot/test_8.txt"));
+});
