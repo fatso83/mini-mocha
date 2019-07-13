@@ -1,87 +1,12 @@
-const { assertFunction, assertTitle, assertNumber } = require("./lib/util");
-const { Processor, TASK_TYPE, TASK_ADDED_EVENT_NAME } = require("./lib/processor");
-const { META_DATA } = require("./lib/executor");
+const { assertNumber } = require("./lib/util");
+const { Processor } = require("./lib/processor");
 const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
+const functions = require("./lib/functions");
 
-/**
- * Purpose of using the "caller" is to
- * keep the each "it"s and "eachHooks" inside the function.
- * I set the metaData attribute in the caller function.
- * (check the "describe" function)
- *
- * TODO:
- * Since "caller" attribute is none standard approach,
- * Lets try to replace this with better approach
- */
-
-function after(fn) {
-    assertFunction(fn);
-    after.caller[META_DATA].afterHook = fn;
-}
-
-function afterEach(fn) {
-    assertFunction(fn);
-    afterEach.caller[META_DATA].afterEachHookCollection.push(fn);
-}
-
-function before(fn) {
-    assertFunction(fn);
-    before.caller[META_DATA].beforeHook = fn;
-}
-
-function beforeEach(fn) {
-    assertFunction(fn);
-    beforeEach.caller[META_DATA].beforeEachHookCollection.push(fn);
-}
-
-function describe(title, fn) {
-    assertTitle(title);
-    assertFunction(fn);
-
-    fn[META_DATA] = {
-        title,
-        afterHook: null,
-        afterEachHookCollection: [],
-        beforeHook: null,
-        beforeEachHookCollection: [],
-        fns: [],
-        itCollection: []
-    };
-
-    if (describe.caller && describe.caller[META_DATA]) {
-        describe.caller[META_DATA].fns.push(fn);
-    } else {
-        this.processor.queue.push({
-            type: TASK_TYPE.describe,
-            fn,
-            timeOut: this.timeOut
-        });
-
-        this.processor.emit(TASK_ADDED_EVENT_NAME);
-    }
-}
-
-function it(title, fn) {
-    assertTitle(title);
-    assertFunction(fn);
-
-    const caller = it.caller ? it.caller[META_DATA] : undefined;
-    if (!caller) {
-        this.processor.queue.push({
-            type: TASK_TYPE.it,
-            title,
-            fn,
-            timeOut: this.timeOut
-        });
-
-        this.processor.emit(TASK_ADDED_EVENT_NAME);
-    } else {
-        caller.itCollection.push({
-            title,
-            fn
-        });
-    }
-}
+// BDD
+const { post: after, postEach: afterEach, pre: before, preEach: beforeEach } = functions;
+// TDD
+const { post: teardown, postEach: suiteTeardown, pre: setup, preEach: suiteSetup } = functions;
 
 module.exports = {
     install: function install(isRunKit = false, timeOut = 500) {
@@ -91,17 +16,32 @@ module.exports = {
 
         const reporter = isRunKit ? RunKitReporter : DefaultReporter;
         const processor = Processor.getProcessor(reporter);
-        global.describe = describe.bind({
+
+        const params = {
             processor,
             timeOut
-        });
-        global.it = it.bind({
-            processor,
-            timeOut
-        });
+        };
+
+        // BDD
+        const describe = functions.testBlock.bind(params);
+        const it = functions.testCase.bind(params);
+        global.context = describe;
+        global.describe = describe;
+        global.it = it;
+        global.specify = it;
         global.after = after;
         global.afterEach = afterEach;
         global.before = before;
         global.beforeEach = beforeEach;
+
+        // TDD
+        const suite = functions.testBlock.bind(params);
+        const test = functions.testCase.bind(params);
+        global.suite = suite;
+        global.test = test;
+        global.teardown = teardown;
+        global.suiteTeardown = suiteTeardown;
+        global.setup = setup;
+        global.suiteSetup = suiteSetup;
     }
 };
