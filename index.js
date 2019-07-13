@@ -3,6 +3,21 @@ const { Processor } = require("./lib/processor");
 const { DefaultReporter, RunKitReporter } = require("./lib/reporters");
 const functions = require("./lib/functions");
 
+const testingHookInterfaces = {
+    bdd: {
+        pre: "before",
+        preEach: "beforeEach",
+        post: "after",
+        postEach: "afterEach"
+    },
+    tdd: {
+        pre: "setup",
+        preEach: "suiteSetup",
+        pre: "teardown",
+        preEach: "suiteTeardown"
+    }
+};
+
 // BDD
 const { post: after, postEach: afterEach, pre: before, preEach: beforeEach } = functions;
 // TDD
@@ -23,8 +38,12 @@ module.exports = {
         };
 
         // BDD
-        const describe = functions.testBlock.bind(params);
-        const it = functions.testCase.bind(params);
+        const bddParams = {
+            testingHookInterfaces: testingHookInterfaces.bdd,
+            ...params
+        };
+        const describe = functions.testBlock.bind(bddParams);
+        const it = functions.testCase.bind(bddParams);
         global.context = describe;
         global.describe = describe;
         global.it = it;
@@ -35,8 +54,12 @@ module.exports = {
         global.beforeEach = beforeEach;
 
         // TDD
-        const suite = functions.testBlock.bind(params);
-        const test = functions.testCase.bind(params);
+        const tddParams = {
+            testingHookInterfaces: testingHookInterfaces.tdd,
+            ...params
+        };
+        const suite = functions.testBlock.bind(tddParams);
+        const test = functions.testCase.bind(tddParams);
         global.suite = suite;
         global.test = test;
         global.teardown = teardown;
