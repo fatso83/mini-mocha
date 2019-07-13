@@ -1,4 +1,4 @@
-require("../..").install();
+require("../../..").install(false, 800);
 
 function promiseTimeOut(timeOutValue) {
     return new Promise(resolve => {
@@ -8,7 +8,7 @@ function promiseTimeOut(timeOutValue) {
     });
 }
 
-describe("describe timeout (default value) test", function() {
+describe("describe timeout (new value) test", function() {
     it("it 1", function() {
         console.log("main 1 it 2");
     });
@@ -19,10 +19,10 @@ describe("describe timeout (default value) test", function() {
     });
 });
 
-it("timeout test - it 1", function() {
-    console.log("timeout test - it 1");
+it("timeout test (new value) - it 1", function() {
+    console.log("timeout test (new value) - it 1");
 });
-it("timeout test - it 2", function(done) {});
-it("timeout test - it 3", async function() {
+it("timeout test (new value) - it 2", function(done) {});
+it("timeout test (new value) - it 3", async function() {
     await promiseTimeOut(600);
 });

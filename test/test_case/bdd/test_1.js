@@ -1,4 +1,4 @@
-require('../../').install();
+require('../../../').install();
 
 it('standalone', () => {
   console.log('standalone');

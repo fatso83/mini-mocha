@@ -1,0 +1,44 @@
+suite 1
+==> suite 1 setup
+==> suite 1 suiteSetup
+==> main 1 test 1 -->  1
+✔️  main 1 test 1
+==> suite 1 suiteTeardown
+==> suite 1 suiteSetup
+==> main 1 test 2
+✔️  main 1 test 2
+==> suite 1 suiteTeardown
+==> suite 1 teardown
+suite 2
+==> suite 2 setup
+==> suite 2 suiteSetup
+==> main 2 test 2 -->  1
+✔️  main 2 test 1
+==> suite 2 suiteTeardown
+==> suite 2 suiteSetup
+==> main 2 test 2
+✔️  main 2 test 2
+==> suite 2 suiteTeardown
+==> suite 2 teardown
+suite 3
+==> suite 3 setup
+==> suite 3 suiteSetup
+==> main 3 test 1 -->  1
+✔️  main 3 test 1
+==> suite 3 suiteTeardown
+==> suite 3 suiteSetup
+==> main 3 test 2
+❌ main 3 test 2 (Failed with: "failed")
+==> suite 3 suiteTeardown
+==> suite 3 teardown
+suite 4
+==> suite 4 setup
+==> suite 4 suiteSetup
+==> main 4 test 1 -->  1
+✔️  main 4 test 1
+==> suite 4 suiteTeardown
+==> suite 4 suiteSetup
+==> main 4 test 2
+❌ main 4 test 2 (Failed with: "failed")
+==> suite 4 suiteTeardown
+==> suite 4 teardown -->  4

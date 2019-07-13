@@ -1,4 +1,4 @@
-require("../..").install();
+require("../../..").install();
 
 describe("main describe", () => {
     console.log("main describe");

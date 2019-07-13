@@ -1,4 +1,4 @@
-require("../..").install(true);
+require("../../..").install(true);
 
 const assert = require("assert");
 
