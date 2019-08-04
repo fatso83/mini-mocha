@@ -1,0 +1,20 @@
+suite test with done
+==> suite test with done setup
+==> suite test with done suiteSetup
+==> main with done test 2
+✔️  main with done test 1
+==> suite test with done suiteTeardown
+==> suite test with done suiteSetup
+==> main with done test 2 - async
+✔️  main with done test 2 - async
+==> suite test with done suiteTeardown
+==> suite test with done suiteSetup
+❌ main with done test 3 - error object as an error (Failed with: "done error")
+==> suite test with done suiteTeardown
+==> suite test with done suiteSetup
+❌ main with done test 4 - string as an error (Failed with: "error message")
+==> suite test with done suiteTeardown
+==> suite test with done suiteSetup
+✔️  main with done test 4 - no error
+==> suite test with done suiteTeardown
+==> suite test with done teardown
