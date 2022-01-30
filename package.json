@@ -13,6 +13,7 @@
     "test": "run-p test:*",
     "test:output": "node test/tests.js",
     "test:tarball": "./scripts/test-tarball.sh",
+    "test:exit-status": "./integration-test/test.sh",
     "update-snapshots": "rimraf test/snapshot/tdd/* && rimraf test/snapshot/bdd/* && npm t",
     "clean": "rimraf package *.tgz"
   },

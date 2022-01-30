@@ -1,2 +1,4 @@
 package-lock.json
 node_modules
+integration-test/failure_test.js
+integration-test/pass_test.js
