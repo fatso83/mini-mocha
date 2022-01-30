@@ -22,19 +22,19 @@ EOF
     node pass_test.js
 }
 
-should_have_exit_status_zero_on_failure
+should_have_exit_status_zero_on_failure >> /dev/null
 if [[ $? != 0 ]]; then
     echo "It exited with non-zero status on a non-failing test!"
     exit 1
 fi
 
-should_exit_with_non_zero_on_failure
+should_exit_with_non_zero_on_failure >> /dev/null
 if [[ $? == 0 ]]; then
     echo "It did not exit with non-zero status on failure!"
     exit 1
 fi
 
-MINI_MOCHA_IGNORE_FAILURE=true should_exit_with_non_zero_on_failure
+MINI_MOCHA_IGNORE_FAILURE=true should_exit_with_non_zero_on_failure >> /dev/null
 if [[ $? != 0 ]]; then
     echo "The processor should not exit with non-zero when MINI_MOCHA_IGNORE_FAILURE is set"
     exit 1
