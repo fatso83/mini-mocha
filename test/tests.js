@@ -1,4 +1,5 @@
 const assert = require("assert");
+process.env["MINI_MOCHA_IGNORE_FAILURE"] = "true";
 
 const { getSnapshotContent, runTest } = require("./helper");
 ["tdd", "bdd"].forEach(testInterface => {

@@ -32,7 +32,8 @@
     "url": "https://github.com/fatso83/mini-mocha/issues"
   },
   "dependencies": {
-    "@runkit/value-viewer": "1.0.0"
+    "@runkit/value-viewer": "1.0.0",
+    "debug": "^4.3.3"
   },
   "devDependencies": {
     "husky": "^2.3.0",

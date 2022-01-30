@@ -33,3 +33,9 @@ if [[ $? == 0 ]]; then
     echo "It did not exit with non-zero status on failure!"
     exit 1
 fi
+
+MINI_MOCHA_IGNORE_FAILURE=true should_exit_with_non_zero_on_failure
+if [[ $? != 0 ]]; then
+    echo "The processor should not exit with non-zero when MINI_MOCHA_IGNORE_FAILURE is set"
+    exit 1
+fi
